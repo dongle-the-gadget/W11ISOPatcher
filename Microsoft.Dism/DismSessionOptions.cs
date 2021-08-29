@@ -2,6 +2,7 @@
 //
 // Licensed under the MIT license.
 
+
 namespace Microsoft.Dism
 {
     /// <summary>

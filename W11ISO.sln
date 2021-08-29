@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31612.314
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "W11ISO", "W11ISO\W11ISO.csproj", "{683BB5FE-ED9F-4373-B2A2-EFB5B12BEDD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "W11ISO", "W11ISO\W11ISO.csproj", "{683BB5FE-ED9F-4373-B2A2-EFB5B12BEDD4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Dism", "Microsoft.Dism\Microsoft.Dism.csproj", "{6FBF294C-5DB2-49F2-8C38-A0040FDC6207}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CdImage", "CdImage\CdImage.csproj", "{A9F50551-DE38-48F3-8AD5-31FE2E1B8E8A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCdImage", "TestCdImage\TestCdImage.csproj", "{23763555-9D67-424E-9B6C-B44B06174ECC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CdImage", "CdImage\CdImage.csproj", "{A9F50551-DE38-48F3-8AD5-31FE2E1B8E8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{A9F50551-DE38-48F3-8AD5-31FE2E1B8E8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9F50551-DE38-48F3-8AD5-31FE2E1B8E8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9F50551-DE38-48F3-8AD5-31FE2E1B8E8A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{23763555-9D67-424E-9B6C-B44B06174ECC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{23763555-9D67-424E-9B6C-B44B06174ECC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{23763555-9D67-424E-9B6C-B44B06174ECC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{23763555-9D67-424E-9B6C-B44B06174ECC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

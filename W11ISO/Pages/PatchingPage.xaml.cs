@@ -14,6 +14,11 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CdImage;
 using System.IO;
+using Microsoft.Dism;
+using System.Runtime.InteropServices;
+using Microsoft.Win32;
+using System.ComponentModel;
+using System.Diagnostics;
 
 namespace W11ISO.Pages
 {
@@ -22,6 +27,12 @@ namespace W11ISO.Pages
     /// </summary>
     public partial class PatchingPage : Page
     {
+        [DllImport("advapi32.dll", SetLastError = true)]
+        private static extern Int32 RegLoadKey(UInt32 hKey, String lpSubKey, String lpFile);
+
+        [DllImport("advapi32.dll", SetLastError = true)]
+        private static extern Int32 RegUnLoadKey(UInt32 hKey, String lpSubKey);
+
         public PatchingPage()
         {
             InitializeComponent();
@@ -53,6 +64,7 @@ namespace W11ISO.Pages
                     {
                         ExtractCircle.Fill = new SolidColorBrush(Colors.Green);
                         MountCircle.Fill = new SolidColorBrush(Colors.Blue);
+                        ProgressText.Content = "Mounting boot.wim...";
                     });
                 }
                 catch
@@ -63,8 +75,160 @@ namespace W11ISO.Pages
                         ProgressText.Content = "Sorry, but the program encountered an error during ISO extraction and cannot continue.";
                         ProgressBar.IsIndeterminate = false;
                     });
+                    return;
+                }
+
+                try
+                {
+                    RemoveReadOnly(System.IO.Path.Combine(MainWindow.location.WorkingDir, "isoroot"));
+                    Directory.CreateDirectory(System.IO.Path.Combine(MainWindow.location.WorkingDir, "mount"));
+                    DismApi.Initialize(DismLogLevel.LogErrorsWarnings);
+                    DismApi.MountImage(System.IO.Path.Combine(MainWindow.location.WorkingDir, "isoroot", "sources", "boot.wim"), System.IO.Path.Combine(MainWindow.location.WorkingDir, "mount"), 2);
+                    Dispatcher.Invoke(() =>
+                    {
+                        MountCircle.Fill = new SolidColorBrush(Colors.Green);
+                        RegistryCircle.Fill = new SolidColorBrush(Colors.Blue);
+                        ProgressText.Content = "Applying registry patch...";
+                    });
+                }
+                catch
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        MountCircle.Fill = new SolidColorBrush(Colors.Red);
+                        ProgressText.Content = "Sorry, but the program encountered an error during boot.wim mounting and cannot continue.";
+                        ProgressBar.IsIndeterminate = false;
+                    });
+                    return;
+                }
+
+                try
+                {
+                    Privileges.EnablePrivilege(SecurityEntity.SE_BACKUP_NAME);
+                    Privileges.EnablePrivilege(SecurityEntity.SE_RESTORE_NAME);
+
+                    Process process = new();
+                    process.StartInfo.FileName = "reg.exe";
+                    process.StartInfo.Arguments = $"load HKLM\\bootwimpatch \"{System.IO.Path.Combine(MainWindow.location.WorkingDir, "mount", "Windows", "system32", "config", "SYSTEM")}\"";
+                    process.StartInfo.CreateNoWindow = true;
+                    process.Start();
+                    process.WaitForExit();
+
+                    Registry.SetValue("HKEY_LOCAL_MACHINE\\bootwimpatch\\Setup\\LabConfig", "BypassTPMCheck", 1);
+                    Registry.SetValue("HKEY_LOCAL_MACHINE\\bootwimpatch\\Setup\\LabConfig", "BypassSecureBootCheck", 1);
+                    Registry.SetValue("HKEY_LOCAL_MACHINE\\bootwimpatch\\Setup\\LabConfig", "BypassRAMCheck", 1);
+
+                    process = new();
+                    process.StartInfo.FileName = "reg.exe";
+                    process.StartInfo.Arguments = $"unload HKLM\\bootwimpatch";
+                    process.StartInfo.CreateNoWindow = true;
+                    process.Start();
+                    process.WaitForExit();
+                    Dispatcher.Invoke(() =>
+                    {
+                        RegistryCircle.Fill = new SolidColorBrush(Colors.Green);
+                        UnmountCircle.Fill = new SolidColorBrush(Colors.Blue);
+                        ProgressText.Content = "Saving and unmounting boot.wim...";
+                    });
+                }
+                catch
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        RegistryCircle.Fill = new SolidColorBrush(Colors.Red);
+                        ProgressText.Content = "Sorry, but the program encountered an error during registry patching and cannot continue.";
+                        ProgressBar.IsIndeterminate = false;
+                    });
+                    return;
+                }
+
+                try
+                {
+                    DismApi.UnmountImage(System.IO.Path.Combine(MainWindow.location.WorkingDir, "mount"), true);
+                    Dispatcher.Invoke(() =>
+                    {
+                        UnmountCircle.Fill = new SolidColorBrush(Colors.Green);
+                        PackageCircle.Fill = new SolidColorBrush(Colors.Blue);
+                        ProgressText.Content = "Building ISO file...";
+                    });
+                }
+                catch
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        UnmountCircle.Fill = new SolidColorBrush(Colors.Red);
+                        ProgressText.Content = "Sorry, but the program encountered an error during boot.wim saving and cannot continue.";
+                        ProgressBar.IsIndeterminate = false;
+                    });
+                    return;
+                }
+
+                try
+                {
+                    CdImageHandler.GenerateISOImage(new FileInfo(MainWindow.location.Product).FullName, System.IO.Path.Combine(MainWindow.location.WorkingDir, "isoroot"), "CCCOMA_X64FRE_EN-US_DV9", (Operation, ProgressPercentage, IsIndeterminate) =>
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            ProgressBar.IsIndeterminate = IsIndeterminate;
+                            if (!IsIndeterminate)
+                            {
+                                ProgressBar.Value = ProgressPercentage;
+                            }
+                        });
+                    });
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        PackageCircle.Fill = new SolidColorBrush(Colors.Green);
+                        CleaningUpCircle.Fill = new SolidColorBrush(Colors.Blue);
+                        ProgressText.Content = "Deleting unused files...";
+                    });
+                }
+                catch
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        PackageCircle.Fill = new SolidColorBrush(Colors.Red);
+                        ProgressText.Content = "Sorry, but the program encountered an error during new ISO creation and cannot continue.";
+                        ProgressBar.IsIndeterminate = false;
+                    });
+                }
+
+                try
+                {
+                    DirectoryInfo dir = new DirectoryInfo(MainWindow.location.WorkingDir);
+                    foreach (var file in dir.GetFiles())
+                        file.Delete();
+                    foreach (var folder in dir.GetDirectories())
+                        folder.Delete(true);
+                    Dispatcher.Invoke(() =>
+                    {
+                        CleaningUpCircle.Fill = new SolidColorBrush(Colors.Green);
+                        ProgressText.Content = "Done!";
+                    });
+                }
+                catch
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        CleaningUpCircle.Fill = new SolidColorBrush(Colors.Red);
+                        ProgressText.Content = "Sorry, we failed to clean up, but your ISO file is ready. You can manually clean up by deleting the contents of the working folder, specified in the previous step.";
+                    });
+                }
+                finally
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        ProgressBar.IsIndeterminate = false;
+                    });
                 }
             });
+        }
+
+        private void RemoveReadOnly(string workingDir)
+        {
+            foreach (var file in new DirectoryInfo(workingDir).GetFiles("*", SearchOption.AllDirectories))
+                file.Attributes &= ~FileAttributes.ReadOnly;
         }
 
         private void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)

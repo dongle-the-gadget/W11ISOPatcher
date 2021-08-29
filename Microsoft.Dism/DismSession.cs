@@ -2,9 +2,11 @@
 //
 // Licensed under the MIT license.
 
+
 using Microsoft.Win32.SafeHandles;
 using System;
 using System.Runtime.ConstrainedExecution;
+
 
 namespace Microsoft.Dism
 {
@@ -17,6 +19,7 @@ namespace Microsoft.Dism
         private readonly string _systemDrive;
         private readonly string _windowsDirectory;
         private bool _rebootRequired;
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DismSession" /> class.
@@ -32,10 +35,13 @@ namespace Microsoft.Dism
             _windowsDirectory = windowsDirectory;
             _systemDrive = systemDrive;
 
+
             Options = options ?? new DismSessionOptions();
+
 
             Reload();
         }
+
 
         /// <summary>
         /// Gets a value indicating whether or not a reboot is required.
@@ -49,10 +55,12 @@ namespace Microsoft.Dism
             }
         }
 
+
         /// <summary>
         /// Gets the options for the session.
         /// </summary>
         internal DismSessionOptions Options { get; }
+
 
         /// <summary>
         /// Reloads the session by closing the current session and opening it again.
@@ -64,12 +72,16 @@ namespace Microsoft.Dism
                 DismApi.NativeMethods.DismCloseSession(handle);
             }
 
+
             int hresult = DismApi.NativeMethods.DismOpenSession(_imagePath, _windowsDirectory, _systemDrive, out IntPtr sessionPtr);
+
 
             DismUtilities.ThrowIfFail(hresult);
 
+
             SetHandle(sessionPtr);
         }
+
 
         /// <summary>
         /// Releases the DismSession handle.
@@ -84,6 +96,7 @@ namespace Microsoft.Dism
                 // Close the session
                 return DismApi.NativeMethods.DismCloseSession(DangerousGetHandle()) == 0;
             }
+
 
             // Return true
             return true;

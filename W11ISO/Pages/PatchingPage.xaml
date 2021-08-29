@@ -41,6 +41,10 @@
                 <Ellipse Name="PackageCircle" Fill="Gray" Height="25" Width="25"/>
                 <Label VerticalAlignment="Center" Margin="5,0,0,0">Repackaging to ISO</Label>
             </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <Ellipse Name="CleaningUpCircle" Fill="Gray" Height="25" Width="25"/>
+                <Label VerticalAlignment="Center" Margin="5,0,0,0">Cleaning up</Label>
+            </StackPanel>
         </StackPanel>
 
         <StackPanel Grid.Row="3">

@@ -2,26 +2,16 @@
 //
 // Licensed under the MIT license.
 
+
 using System;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
+
 
 namespace Microsoft.Dism
 {
     public static partial class DismApi
     {
-        /// <summary>
-        /// Closes a DISMSession created by <see cref="OpenOfflineSession(string)" /> method. This function does not unmount the image. To unmount the image, use the <see cref="UnmountImage(string, bool)" /> method once all sessions are closed.
-        /// </summary>
-        /// <param name="session">A valid DISM Session. The DISM Session must be associated with an image. You can associate a session with an image by using the <see cref="OpenOfflineSession(string)" /> or <see cref="OpenOnlineSession" />method.</param>
-        /// <exception cref="DismException">When a failure occurs.</exception>
-        public static void CloseSession(DismSession session)
-        {
-            int hresult = NativeMethods.DismCloseSession(session.DangerousGetHandle());
-
-            DismUtilities.ThrowIfFail(hresult);
-        }
-
         internal static partial class NativeMethods
         {
             /// <summary>

@@ -2,9 +2,11 @@
 //
 // Licensed under the MIT license.
 
+
 using System;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
+
 
 namespace Microsoft.Dism
 {
@@ -21,6 +23,7 @@ namespace Microsoft.Dism
             return OpenOfflineSession(imagePath, null, null);
         }
 
+
         /// <summary>
         /// Associates an offline Windows image with a DISMSession.
         /// </summary>
@@ -34,6 +37,7 @@ namespace Microsoft.Dism
             return OpenSession(imagePath, windowsDirectory, systemDrive);
         }
 
+
         /// <summary>
         /// Associates an online Windows image with a DISMSession.
         /// </summary>
@@ -43,6 +47,7 @@ namespace Microsoft.Dism
         {
             return OpenSession(DISM_ONLINE_IMAGE, null, null);
         }
+
 
         /// <summary>
         /// Associates an offline or online Windows image with a DISMSession.
@@ -56,6 +61,7 @@ namespace Microsoft.Dism
         {
             return new DismSession(imagePath, windowsDirectory, systemDrive, options);
         }
+
 
         internal static partial class NativeMethods
         {

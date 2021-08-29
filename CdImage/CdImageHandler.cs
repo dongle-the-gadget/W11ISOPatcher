@@ -15,16 +15,10 @@ namespace CdImage
             DateTime creationtime = File.GetCreationTimeUtc(setupexe);
 
 
-            string runningDirectory = Process.GetCurrentProcess().MainModule.FileName.Contains(Path.DirectorySeparatorChar) ? string.Join(Path.DirectorySeparatorChar.ToString(), Process.GetCurrentProcess().MainModule.FileName.Split(Path.DirectorySeparatorChar).Reverse().Skip(1).Reverse()) : "";
-
-
-            string cdimagepath = Path.Combine(runningDirectory, "CDImage", "cdimage.exe");
-
-
             string timestamp = creationtime.ToString("MM/dd/yyyy,hh:mm:ss");
 
 
-            ProcessStartInfo processStartInfo = new(cdimagepath,
+            ProcessStartInfo processStartInfo = new("cdimage.exe",
                 $"\"-bootdata:2#p0,e,b{cdroot}\\boot\\etfsboot.com#pEF,e,b{cdroot}\\efi\\Microsoft\\boot\\efisys.bin\" -o -h -m -u2 -udfver102 -t{timestamp} -l{volumelabel}  \"{cdroot}\" \"{isopath}\"");
 
 
