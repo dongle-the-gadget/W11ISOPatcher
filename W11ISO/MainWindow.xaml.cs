@@ -23,6 +23,7 @@ namespace W11ISO
     {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public static ModernWpf.Controls.Frame _frame;
+        public static Location location;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
         public MainWindow()

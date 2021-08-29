@@ -77,6 +77,7 @@ namespace W11ISO.Pages
             {
                 return;
             }
+            MainWindow.location = new Location(new FileInfo(OrigISOTextBox.Text).FullName, new DirectoryInfo(WorkingDirTextBox.Text).FullName, new FileInfo(ProductTextBox.Text).FullName);
             MainWindow._frame.Navigate(typeof(PatchingPage));
         }
 

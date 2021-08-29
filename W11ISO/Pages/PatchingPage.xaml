@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:W11ISO.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="650" d:DesignWidth="850"
-      Title="PatchingPage">
+      Title="PatchingPage"
+      Loaded="Page_Loaded">
 
     <Grid Margin="40">
         <Grid.RowDefinitions>
@@ -43,7 +44,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="3">
-            <Label Name="ProgressText" Margin="0,5">Mounting ISO</Label>
+            <Label Name="ProgressText" Margin="0,5">Mounting ISO...</Label>
             <ProgressBar Name="ProgressBar" IsIndeterminate="True"/>
         </StackPanel>
     </Grid>
