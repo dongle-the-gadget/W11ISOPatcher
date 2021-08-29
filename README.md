@@ -14,3 +14,4 @@ Requires .NET 6 Preview Windows Desktop SDK and Visual Studio 2019 Preview or Vi
 ## Contributing guidelines
 
 ## Third party licenses
+Third party licenses are available [here](/docs/thirdpartylicenses.md)
