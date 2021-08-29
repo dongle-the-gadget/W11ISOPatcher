@@ -27,12 +27,6 @@ namespace W11ISO.Pages
     /// </summary>
     public partial class PatchingPage : Page
     {
-        [DllImport("advapi32.dll", SetLastError = true)]
-        private static extern Int32 RegLoadKey(UInt32 hKey, String lpSubKey, String lpFile);
-
-        [DllImport("advapi32.dll", SetLastError = true)]
-        private static extern Int32 RegUnLoadKey(UInt32 hKey, String lpSubKey);
-
         public PatchingPage()
         {
             InitializeComponent();
@@ -104,9 +98,6 @@ namespace W11ISO.Pages
 
                 try
                 {
-                    Privileges.EnablePrivilege(SecurityEntity.SE_BACKUP_NAME);
-                    Privileges.EnablePrivilege(SecurityEntity.SE_RESTORE_NAME);
-
                     Process process = new();
                     process.StartInfo.FileName = "reg.exe";
                     process.StartInfo.Arguments = $"load HKLM\\bootwimpatch \"{System.IO.Path.Combine(MainWindow.location.WorkingDir, "mount", "Windows", "system32", "config", "SYSTEM")}\"";
