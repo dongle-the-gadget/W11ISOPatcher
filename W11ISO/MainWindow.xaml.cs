@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using W11ISO.Pages;
 
 namespace W11ISO
 {
@@ -20,9 +21,15 @@ namespace W11ISO
     /// </summary>
     public partial class MainWindow : Window
     {
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public static ModernWpf.Controls.Frame _frame;
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+
         public MainWindow()
         {
             InitializeComponent();
+            _frame = frame;
+            _frame.Navigate(typeof(WelcomePage));
         }
     }
 }

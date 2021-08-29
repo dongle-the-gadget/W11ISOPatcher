@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:W11ISO"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="MainWindow" Height="650" Width="850"
+        xmlns:ui="http://schemas.modernwpf.com/2019" xmlns:pages="clr-namespace:W11ISO.Pages"
+        ui:WindowHelper.UseModernWindowStyle="True">
+    <ui:Frame Name="frame"/>
 </Window>

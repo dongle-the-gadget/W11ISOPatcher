@@ -1,0 +1,50 @@
+﻿<Page x:Class="W11ISO.Pages.PatchingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:W11ISO.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="650" d:DesignWidth="850"
+      Title="PatchingPage">
+
+    <Grid Margin="40">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Patching ISO" FontWeight="Bold" FontSize="36" TextWrapping="Wrap" />
+        <TextBlock Grid.Row="1" Text="Sit back and relax while we patch the ISO for you." FontWeight="SemiBold" FontSize="18" TextWrapping="Wrap" />
+
+        <StackPanel Margin="0,32" Grid.Row="2">
+            <StackPanel Orientation="Horizontal">
+                <Ellipse Name="ExtractCircle" Fill="Blue" Height="25" Width="25"/>
+                <Label VerticalAlignment="Center" Margin="5,0,0,0">Extracting content of ISO</Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <Ellipse Name="MountCircle" Fill="Gray" Height="25" Width="25"/>
+                <Label VerticalAlignment="Center" Margin="5,0,0,0">Mounting boot.wim</Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <Ellipse Name="RegistryCircle" Fill="Gray" Height="25" Width="25"/>
+                <Label VerticalAlignment="Center" Margin="5,0,0,0">Applying registry patch</Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <Ellipse Name="UnmountCircle" Fill="Gray" Height="25" Width="25"/>
+                <Label VerticalAlignment="Center" Margin="5,0,0,0">Saving and unmounting boot.wim</Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <Ellipse Name="PackageCircle" Fill="Gray" Height="25" Width="25"/>
+                <Label VerticalAlignment="Center" Margin="5,0,0,0">Repackaging to ISO</Label>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3">
+            <Label Name="ProgressText" Margin="0,5">Mounting ISO</Label>
+            <ProgressBar Name="ProgressBar" IsIndeterminate="True"/>
+        </StackPanel>
+    </Grid>
+</Page>
