@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock Text="Welcome" FontWeight="Bold" FontSize="36" TextWrapping="Wrap" />
-        <TextBlock Grid.Row="1" Text="This wizard will help you through creating a no TPM or Secure Boot check Windows 11 ISO." FontWeight="SemiBold" FontSize="18" TextWrapping="Wrap" />
+        <TextBlock Grid.Row="1" Text="This wizard will help you through creating a Windows 11 ISO without TPM or Secure Boot checks." FontWeight="SemiBold" FontSize="18" TextWrapping="Wrap" />
 
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>

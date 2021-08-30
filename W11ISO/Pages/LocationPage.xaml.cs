@@ -96,6 +96,10 @@ namespace W11ISO.Pages
                     OrigISOError.Visibility = Visibility.Visible;
                     OrigISOError.Content = "The specified ISO file does not exist.";
                 }
+                else
+                {
+                    OrigISOError.Visibility = Visibility.Collapsed;
+                }
             }
             catch (Exception ex)
             {
@@ -116,6 +120,10 @@ namespace W11ISO.Pages
                     WorkingDirError.Visibility = Visibility.Visible;
                     WorkingDirError.Content = "The working directory is not empty.";
                 }
+                else
+                {
+                    WorkingDirError.Visibility = Visibility.Collapsed;
+                }
             }
             catch (Exception ex)
             {
@@ -135,6 +143,10 @@ namespace W11ISO.Pages
                 {
                     ProductError.Visibility = Visibility.Visible;
                     ProductError.Content = "The specified ISO file exists.";
+                }
+                else
+                {
+                    ProductError.Visibility = Visibility.Collapsed;
                 }
             }
             catch (Exception ex)
