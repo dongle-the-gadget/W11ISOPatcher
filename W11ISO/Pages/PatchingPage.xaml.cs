@@ -326,7 +326,9 @@ namespace W11ISO.Pages
                 {
                     return false;
                 }
-                using (WebClient wc = new WebClient())
+#pragma warning disable SYSLIB0014 // Type or member is obsolete
+                using (WebClient wc = new())
+#pragma warning restore SYSLIB0014 // Type or member is obsolete
                 {
                     wc.DownloadProgressChanged += wc_DownloadProgressChanged;
                     await wc.DownloadFileTaskAsync(
