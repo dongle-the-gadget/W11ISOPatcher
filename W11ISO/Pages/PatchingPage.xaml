@@ -26,6 +26,10 @@
                 <Label VerticalAlignment="Center" Margin="5,0,0,0">Extracting content of ISO</Label>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <Ellipse Name="AppraiserCircle" Fill="Gray" Height="25" Width="25"/>
+                <Label VerticalAlignment="Center" Margin="5,0,0,0">Applying appraiserres.dll patch</Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                 <Ellipse Name="MountCircle" Fill="Gray" Height="25" Width="25"/>
                 <Label VerticalAlignment="Center" Margin="5,0,0,0">Mounting boot.wim</Label>
             </StackPanel>

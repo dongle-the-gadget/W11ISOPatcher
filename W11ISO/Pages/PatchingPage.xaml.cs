@@ -19,6 +19,7 @@ using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Net;
 
 namespace W11ISO.Pages
 {
@@ -34,7 +35,7 @@ namespace W11ISO.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 try
                 {
@@ -57,8 +58,7 @@ namespace W11ISO.Pages
                     Dispatcher.Invoke(() =>
                     {
                         ExtractCircle.Fill = new SolidColorBrush(Colors.Green);
-                        MountCircle.Fill = new SolidColorBrush(Colors.Blue);
-                        ProgressText.Content = "Mounting boot.wim...";
+                        AppraiserCircle.Fill = new SolidColorBrush(Colors.Blue);
                     });
                 }
                 catch
@@ -74,7 +74,63 @@ namespace W11ISO.Pages
 
                 try
                 {
+                    Dispatcher.Invoke(() =>
+                    {
+                        ProgressText.Content = "Acquiring appraiserres.dll...";
+                    });
+
+                    string appraiserresfile = "";
+                    if (File.Exists("appraiserres.dll"))
+                    {
+                        // A local version of appraiserres.dll is found, use that.
+                        appraiserresfile = "appraiserres.dll";
+                    }
+                    else
+                    {
+                        // Try to download the appraiserres.dll file.
+                        // TODO: Determine if the user is supplying a x64 or an ARM64 ISO.
+                        if (await DownloadAppraiserres())
+                        {
+                            appraiserresfile = filePath;
+                        }
+                    }
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        ProgressBar.IsIndeterminate = true;
+                        ProgressText.Content = "Applying appraiserres.dll...";
+                    });
+
                     RemoveReadOnly(System.IO.Path.Combine(MainWindow.location.WorkingDir, "isoroot"));
+
+                    if (appraiserresfile != "")
+                    {
+                        File.Copy(appraiserresfile, System.IO.Path.Combine(MainWindow.location.WorkingDir, "isoroot", "sources", "appraiserres.dll"), true);
+                        Dispatcher.Invoke(() =>
+                        {
+                            AppraiserCircle.Fill = new SolidColorBrush(Colors.Green);
+                            MountCircle.Fill = new SolidColorBrush(Colors.Blue);
+                            ProgressText.Content = "Mounting boot.wim...";
+                        });
+                    }
+                    else
+                    {
+                        throw new Exception("We cannot download the appraiserres.dll file");
+                    }
+                }
+                catch
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        AppraiserCircle.Fill = new SolidColorBrush(Colors.Red);
+                        ProgressText.Content = "Sorry, but appraiserres.dll patch failed.";
+                        ProgressBar.IsIndeterminate = false;
+                    });
+                    return;
+                }
+
+                try
+                {
                     Directory.CreateDirectory(System.IO.Path.Combine(MainWindow.location.WorkingDir, "mount"));
                     DismApi.Initialize(DismLogLevel.LogErrorsWarnings);
                     DismApi.MountImage(System.IO.Path.Combine(MainWindow.location.WorkingDir, "isoroot", "sources", "boot.wim"), System.IO.Path.Combine(MainWindow.location.WorkingDir, "mount"), 2);
@@ -256,6 +312,46 @@ namespace W11ISO.Pages
                     DirectoryCopy(subdir.FullName, tempPath, copySubDirs);
                 }
             }
+        }
+
+        int downloadFailure = 0;
+        static readonly string filePath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "appraiserres.dll");
+        static readonly Uri downloadUrl = new Uri("https://raw.githubusercontent.com/dongle-the-gadget/W11ISOPatcher/main/appraiserres-x64.dll");
+
+        private async Task<bool> DownloadAppraiserres()
+        {
+            try
+            {
+                if (downloadFailure > 5)
+                {
+                    return false;
+                }
+                using (WebClient wc = new WebClient())
+                {
+                    wc.DownloadProgressChanged += wc_DownloadProgressChanged;
+                    await wc.DownloadFileTaskAsync(
+                        // Param1 = Link of file
+                        downloadUrl,
+                        // Param2 = Path to save
+                        filePath
+                    );
+                }
+                return true;
+            }
+            catch
+            {
+                downloadFailure++;
+                return await DownloadAppraiserres();
+            }
+        }
+
+        private void wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                ProgressBar.IsIndeterminate = false;
+                ProgressBar.Value = e.ProgressPercentage;
+            });
         }
     }
 }
