@@ -26,6 +26,12 @@ Finally, wait for the patcher to finish its work.
 
 **WARNING:** During the patching process **DO NOT** open or modify the working directory, this may disrupt the process.
 
+### Using a local appraiserres.dll file
+
+You can have the program use a local `appraiserres.dll` file by placing the file (under the name `appraiserres.dll`) in the same folder where the patcher is in.
+
+**NOTE:** This program will always use the local file if found.
+
 ## Image
 ![Windows 11 ISO Patcher](https://user-images.githubusercontent.com/29563098/131250432-d3e8fbe2-1653-4cfe-9439-e6804080c70b.png)
 
