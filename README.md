@@ -11,7 +11,7 @@ I also recommend having at least 20 GB of free space.
 Requires .NET 6 Preview Windows Desktop SDK and Visual Studio 2019 Preview or Visual Studio 2022 Preview.
 
 ### ISO
-This program currently only works for x64 machines. I might add ARM64 support (but to be honest, pretty much all ARM64 devices meet system requirements).
+This program currently only works for x64 ISOs. I might add ARM64 support (but to be honest, pretty much all ARM64 devices meet system requirements).
 
 ## Usage
 You will need:
