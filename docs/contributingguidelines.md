@@ -4,7 +4,7 @@ These are the contributing guidelines for Windows 11 ISO patcher. Failure to com
 - Use descriptive PR/Commit names and descriptions.
 
   **Acceptable:**
-  - Add appraisererr.dll patch
+  - Add appraiserres.dll patch
   - Remove unused variables from MainWindow.cs
 
   **Unacceptable:**
