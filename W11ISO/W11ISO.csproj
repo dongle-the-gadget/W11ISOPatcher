@@ -8,6 +8,22 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
+	<PropertyGroup>
+		<Version>1.0.0.0-preview</Version>
+		<Authors>Dongle</Authors>
+		<Product>W11ISOPatcher</Product>
+		<PackageId>W11ISOPatcher</PackageId>
+		<AssemblyVersion>0.9.0.0</AssemblyVersion>
+		<FileVersion>1.0.0.0-preview</FileVersion>
+		<NeutralLanguage>en</NeutralLanguage>
+		<Description>Windows 11 ISO Patcher</Description>
+		<Copyright>MIT License</Copyright>
+		<PackageLicenseUrl>https://github.com/dongle-the-gadget/W11ISOPatcher/blob/main/LICENSE</PackageLicenseUrl>
+		<PackageProjectUrl>https://github.com/dongle-the-gadget/W11ISOPatcher/</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/dongle-the-gadget/W11ISOPatcher/</RepositoryUrl>
+		<Title>Windows 11 ISO Patcher</Title>
+	</PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="ModernWpfUI" Version="0.9.4" />
     <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
