@@ -22,6 +22,8 @@ First, launch the patcher and choose Next.
 
 Then, choose the original ISO file, the working folder, and the final ISO path and choose Next.
 
+**WARNING:** The final ISO file must not be in the working directory, otherwise the file will get deleted during cleanup.
+
 Finally, wait for the patcher to finish its work.
 
 **WARNING:** During the patching process **DO NOT** open or modify the working directory, this may disrupt the process.
