@@ -248,6 +248,11 @@ namespace W11ISO.Pages
                         file.Delete();
                     foreach (var folder in dir.GetDirectories())
                         folder.Delete(true);
+                        
+                    if (File.Exists(filePath))
+                    {
+                        File.Delete(filePath);
+                    }
                     Dispatcher.Invoke(() =>
                     {
                         CleaningUpCircle.Fill = new SolidColorBrush(Colors.Green);
