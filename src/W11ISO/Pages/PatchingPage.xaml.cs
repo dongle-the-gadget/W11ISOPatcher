@@ -164,7 +164,7 @@ namespace W11ISO.Pages
                         throw new Exception("We cannot download the appraiserres.dll file");
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     Dispatcher.Invoke(() =>
                     {
@@ -186,7 +186,7 @@ namespace W11ISO.Pages
                         ProgressText.Content = "Applying registry patch...";
                     });
                 }
-                catch (Exception ex)
+                catch
                 {
                     Dispatcher.Invoke(() =>
                     {
@@ -244,7 +244,7 @@ namespace W11ISO.Pages
                         ProgressText.Content = "Building ISO file...";
                     });
                 }
-                catch (Exception ex)
+                catch
                 {
                     Dispatcher.Invoke(() =>
                     {
@@ -293,11 +293,7 @@ namespace W11ISO.Pages
                         file.Delete();
                     foreach (var folder in dir.GetDirectories())
                         folder.Delete(true);
-                        
-                    /*if (File.Exists(filePath))
-                    {
-                        File.Delete(filePath);
-                    }*/
+
                     Dispatcher.Invoke(() =>
                     {
                         CleaningUpCircle.Fill = new SolidColorBrush(Colors.Green);
@@ -362,48 +358,6 @@ namespace W11ISO.Pages
                     DirectoryCopy(subdir.FullName, tempPath, copySubDirs);
                 }
             }
-        }
-
-        int downloadFailure = 0;
-        static readonly string filePath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "appraiserres.dll");
-        static readonly Uri downloadUrl = new Uri("https://raw.githubusercontent.com/dongle-the-gadget/W11ISOPatcher/main/appraiserres-x64.dll");
-
-        private async Task<bool> DownloadAppraiserres()
-        {
-            try
-            {
-                if (downloadFailure > 5)
-                {
-                    return false;
-                }
-#pragma warning disable SYSLIB0014 // Type or member is obsolete
-                using (WebClient wc = new())
-#pragma warning restore SYSLIB0014 // Type or member is obsolete
-                {
-                    wc.DownloadProgressChanged += wc_DownloadProgressChanged;
-                    await wc.DownloadFileTaskAsync(
-                        // Param1 = Link of file
-                        downloadUrl,
-                        // Param2 = Path to save
-                        filePath
-                    );
-                }
-                return true;
-            }
-            catch
-            {
-                downloadFailure++;
-                return await DownloadAppraiserres();
-            }
-        }
-
-        private void wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                ProgressBar.IsIndeterminate = false;
-                ProgressBar.Value = e.ProgressPercentage;
-            });
         }
 
         public void Report(GeneralDownloadProgress value)

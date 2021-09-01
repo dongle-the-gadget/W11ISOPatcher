@@ -115,11 +115,11 @@ namespace W11ISO.Pages
                     WorkingDirError.Visibility = Visibility.Visible;
                     WorkingDirError.Content = "The working directory does not exist.";
                 }
-                /*else if (dirInfo.GetDirectories().Length > 0 || dirInfo.GetFiles().Length > 0)
+                else if (dirInfo.GetDirectories().Length > 0 || dirInfo.GetFiles().Length > 0)
                 {
                     WorkingDirError.Visibility = Visibility.Visible;
                     WorkingDirError.Content = "The working directory is not empty.";
-                }*/
+                }
                 else
                 {
                     WorkingDirError.Visibility = Visibility.Collapsed;
