@@ -1,6 +1,8 @@
 # W11ISOPatcher
 Windows 11 ISO patcher.
 
+![.NET Workflow](https://github.com/dongle-the-gadget/W11ISOPatcher/actions/workflows/dotnet.yml/badge.svg)
+
 ## Requirements
 ### Running
 This program only officially supports Windows 10 May 2020 Update (version 2004) or newer.
