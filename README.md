@@ -3,6 +3,9 @@ Windows 11 ISO patcher.
 
 ![.NET Workflow](https://github.com/dongle-the-gadget/W11ISOPatcher/actions/workflows/dotnet.yml/badge.svg)
 
+## Important notice about Version 1 Preview
+The `appraiserres.dll` file hosted on this GitHub will be brought down on **September 5th, 2021**. On that date and beyond, you will have to use a local `appraiserres.dll` file or the program will cease to work.
+
 ## Requirements
 ### Running
 This program only officially supports Windows 10 May 2020 Update (version 2004) or newer.
