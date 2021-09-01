@@ -1,0 +1,1 @@
+﻿public delegate void ProgressCallback(string Operation, int ProgressPercentage, bool IsIndeterminate);

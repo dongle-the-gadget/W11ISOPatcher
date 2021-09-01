@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cabinet.NET\Cabinet.NET.csproj" />
+    <ProjectReference Include="..\CompDB.NET\CompDB.NET.csproj" />
+    <ProjectReference Include="..\DownloadLib.NET\DownloadLib.NET.csproj" />
+    <ProjectReference Include="..\WindowsUpdateLib.NET\WindowsUpdateLib.NET.csproj" />
+  </ItemGroup>
+
+</Project>

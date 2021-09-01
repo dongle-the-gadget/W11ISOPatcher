@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+	<OutputType>Library</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ManagedWimLib" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Wim.NET\Microsoft.Wim.NET.csproj" />
+  </ItemGroup>
+
+</Project>

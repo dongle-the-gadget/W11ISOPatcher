@@ -15,18 +15,22 @@ using System.Windows.Shapes;
 using CdImage;
 using System.IO;
 using Microsoft.Dism;
+using Microsoft.Wim;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Net;
+using WindowsUpdateLib;
+using DownloadLib;
+using Imaging;
 
 namespace W11ISO.Pages
 {
     /// <summary>
     /// Interaction logic for PatchingPage.xaml
     /// </summary>
-    public partial class PatchingPage : Page
+    public partial class PatchingPage : Page, IProgress<GeneralDownloadProgress>
     {
         public PatchingPage()
         {
@@ -37,6 +41,7 @@ namespace W11ISO.Pages
         {
             Task.Run(async () =>
             {
+                DismApi.Initialize(DismLogLevel.LogErrorsWarningsInfo);
                 try
                 {
                     string drive = $"{PowerShellMount.Mount(MainWindow.location.OrigISO)}:\\";
@@ -89,10 +94,51 @@ namespace W11ISO.Pages
                     {
                         // Try to download the appraiserres.dll file.
                         // TODO: Determine if the user is supplying a x64 or an ARM64 ISO.
-                        if (await DownloadAppraiserres())
+                        CTAC ctac = new(OSSkuId.Professional, "10.0.19041.200", MachineType.amd64, "Retail", "", "CB", "vb_release", "Production", false);
+                        Dispatcher.Invoke(() =>
                         {
-                            appraiserresfile = filePath;
-                        }
+                            ProgressText.Content = "Listing Microsoft's UUP update list...";
+                        });
+                        UpdateData update = (await FE3Handler.GetUpdates(null, ctac, "", FileExchangeV3UpdateFilter.ProductRelease)).ElementAt(0);
+                        Dispatcher.Invoke(() =>
+                        {
+                            ProgressText.Content = "Downloading core.esd...";
+                        });
+                        string folder = await UpdateUtils.ProcessUpdateAsync(update, System.IO.Path.Combine(MainWindow.location.WorkingDir, "appraiserres"), MachineType.amd64, this, "core_en-us.esd", "en-us");
+
+                        string esdFile = System.IO.Path.Combine(folder, "MetadataESD", "core_en-us.esd");
+
+
+                        Dispatcher.Invoke(() =>
+                        {
+                            ProgressText.Content = "Converting core.esd to core.wim...";
+                        });
+
+                        WIMImaging img = new();
+
+                        img.ExportImage(esdFile, System.IO.Path.Combine(MainWindow.location.WorkingDir, "appraiserres", "core.wim"), 1);
+
+                        File.Delete(esdFile);
+
+                        Dispatcher.Invoke(() =>
+                        {
+                            ProgressText.Content = "Extracting appraiserres.dll from core.wim...";
+                        });
+                        Directory.CreateDirectory(System.IO.Path.Combine(MainWindow.location.WorkingDir, "appraiserres", "mount"));
+
+                        DismApi.MountImage(System.IO.Path.Combine(MainWindow.location.WorkingDir, "appraiserres", "core.wim"), System.IO.Path.Combine(MainWindow.location.WorkingDir, "appraiserres", "mount"), 1);
+
+                        File.Copy(System.IO.Path.Combine(MainWindow.location.WorkingDir, "appraiserres", "mount", "sources", "appraiserres.dll"), System.IO.Path.Combine(MainWindow.location.WorkingDir, "appraiserres", "appraiserres.dll"));
+
+                        Dispatcher.Invoke(() =>
+                        {
+                            ProgressText.Content = "Dismounting core.wim...";
+                        });
+                        DismApi.UnmountImage(System.IO.Path.Combine(MainWindow.location.WorkingDir, "appraiserres", "mount"), false);
+
+                        File.Delete(System.IO.Path.Combine(MainWindow.location.WorkingDir, "appraiserres", "core.wim"));
+
+                        appraiserresfile = System.IO.Path.Combine(MainWindow.location.WorkingDir, "appraiserres", "appraiserres.dll");
                     }
 
                     Dispatcher.Invoke(() =>
@@ -118,7 +164,7 @@ namespace W11ISO.Pages
                         throw new Exception("We cannot download the appraiserres.dll file");
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
                     Dispatcher.Invoke(() =>
                     {
@@ -132,7 +178,6 @@ namespace W11ISO.Pages
                 try
                 {
                     Directory.CreateDirectory(System.IO.Path.Combine(MainWindow.location.WorkingDir, "mount"));
-                    DismApi.Initialize(DismLogLevel.LogErrorsWarnings);
                     DismApi.MountImage(System.IO.Path.Combine(MainWindow.location.WorkingDir, "isoroot", "sources", "boot.wim"), System.IO.Path.Combine(MainWindow.location.WorkingDir, "mount"), 2);
                     Dispatcher.Invoke(() =>
                     {
@@ -141,7 +186,7 @@ namespace W11ISO.Pages
                         ProgressText.Content = "Applying registry patch...";
                     });
                 }
-                catch
+                catch (Exception ex)
                 {
                     Dispatcher.Invoke(() =>
                     {
@@ -199,7 +244,7 @@ namespace W11ISO.Pages
                         ProgressText.Content = "Building ISO file...";
                     });
                 }
-                catch
+                catch (Exception ex)
                 {
                     Dispatcher.Invoke(() =>
                     {
@@ -249,10 +294,10 @@ namespace W11ISO.Pages
                     foreach (var folder in dir.GetDirectories())
                         folder.Delete(true);
                         
-                    if (File.Exists(filePath))
+                    /*if (File.Exists(filePath))
                     {
                         File.Delete(filePath);
-                    }
+                    }*/
                     Dispatcher.Invoke(() =>
                     {
                         CleaningUpCircle.Fill = new SolidColorBrush(Colors.Green);
@@ -359,6 +404,11 @@ namespace W11ISO.Pages
                 ProgressBar.IsIndeterminate = false;
                 ProgressBar.Value = e.ProgressPercentage;
             });
+        }
+
+        public void Report(GeneralDownloadProgress value)
+        {
+            // nah
         }
     }
 }

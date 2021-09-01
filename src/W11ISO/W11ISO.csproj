@@ -9,12 +9,12 @@
   </PropertyGroup>
 
 	<PropertyGroup>
-		<Version>1.0.0.0-preview</Version>
+		<Version>2.0.0.0</Version>
 		<Authors>Dongle</Authors>
 		<Product>W11ISOPatcher</Product>
 		<PackageId>W11ISOPatcher</PackageId>
-		<AssemblyVersion>0.9.0.0</AssemblyVersion>
-		<FileVersion>1.0.0.0-preview</FileVersion>
+		<AssemblyVersion>2.0.0.0</AssemblyVersion>
+		<FileVersion>2.0.0.0</FileVersion>
 		<NeutralLanguage>en</NeutralLanguage>
 		<Description>Windows 11 ISO Patcher</Description>
 		<Copyright>MIT License</Copyright>
@@ -30,8 +30,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cabinet.NET\Cabinet.NET.csproj" />
     <ProjectReference Include="..\CdImage\CdImage.csproj" />
+    <ProjectReference Include="..\CompDB.NET\CompDB.NET.csproj" />
+    <ProjectReference Include="..\DownloadLib.NET\DownloadLib.NET.csproj" />
+    <ProjectReference Include="..\Imaging\Imaging.csproj" />
     <ProjectReference Include="..\Microsoft.Dism\Microsoft.Dism.csproj" />
+    <ProjectReference Include="..\WindowsUpdateLib.NET\WindowsUpdateLib.NET.csproj" />
   </ItemGroup>
 
 </Project>
