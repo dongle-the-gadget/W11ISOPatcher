@@ -1,0 +1,32 @@
+name: Bug report
+description: File a bug report
+labels: [bug]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: To reproduce
+      description: Steps to reproduce the bug
+    validations:
+      required: true
+  - type: textarea
+    id: expectation
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected the program to do.
+    validations:
+      required: true
+  - type: textarea
+    id: expectation
+    attributes:
+      label: Additional context
+      description: Further information that might help us resolve this issue.
+    validations:
+      required: false
