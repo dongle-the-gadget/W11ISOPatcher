@@ -8,7 +8,7 @@ This project only officially supports **Windows 10 May 2020 Update (version 2004
   - Cannot run the program under normal means (ex: macOS or Linux).
 
 ## Program versions
-A download ZIP of W11ISOPatcher has the following naming format: `W11ISOPatcher-[major].[minor].[build].[revision][-preview].zip`
+A download ZIP of W11ISOPatcher has the following naming format: `W11ISOPatcher-[x64/arm64]-[major].[minor].[build].[revision][-preview].zip`
 
 Regarding **incompatible API changes (increase of `major`)**, the older version will be supported for a maximum of 6 months.
 
