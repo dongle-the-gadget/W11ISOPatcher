@@ -30,3 +30,11 @@ body:
       description: Further information that might help us resolve this issue.
     validations:
       required: false
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Support guidelines
+      description: By submitting this issue, you agree to follow our [support guidelines](/docs/supportguidelines.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
