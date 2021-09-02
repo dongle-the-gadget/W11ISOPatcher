@@ -22,6 +22,7 @@
 		<PackageProjectUrl>https://github.com/dongle-the-gadget/W11ISOPatcher/</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/dongle-the-gadget/W11ISOPatcher/</RepositoryUrl>
 		<Title>Windows 11 ISO Patcher</Title>
+		<ApplicationIcon>icon.ico</ApplicationIcon>
 	</PropertyGroup>
 
   <ItemGroup>
