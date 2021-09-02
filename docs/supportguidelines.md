@@ -7,9 +7,6 @@ This project only officially supports **Windows 10 May 2020 Update (version 2004
   - Not tested (ex: Windows 8.1).
   - Cannot run the program under normal means (ex: macOS or Linux).
 
-## ISO
-This project currently only allows **x64 (x86_64/AMD64) Windows 11 ISOs**, please do not open an issue regarding ARM64 Windows 11 ISOs for the time being.
-
 ## Program versions
 A download ZIP of W11ISOPatcher has the following naming format: `W11ISOPatcher-[major].[minor].[build].[revision][-preview].zip`
 
