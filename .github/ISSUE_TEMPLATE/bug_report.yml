@@ -24,7 +24,7 @@ body:
     validations:
       required: true
   - type: textarea
-    id: expectation
+    id: context
     attributes:
       label: Additional context
       description: Further information that might help us resolve this issue.
