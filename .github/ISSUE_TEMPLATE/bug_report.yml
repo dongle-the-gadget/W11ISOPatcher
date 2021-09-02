@@ -36,5 +36,5 @@ body:
       label: Support guidelines
       description: By submitting this issue, you agree to follow our [support guidelines](https://github.com/dongle-the-gadget/W11ISOPatcher/blob/main/docs/supportguidelines.md)
       options:
-        - label: I agree to follow this project's Code of Conduct
+        - label: I agree to follow this project's support guidelines
           required: true
