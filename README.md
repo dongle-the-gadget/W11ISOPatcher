@@ -47,7 +47,7 @@ You can have the program use a local `appraiserres.dll` file by placing the file
 They are [here](/docs/supportguidelines.md).
 
 ## Contributing guidelines
-They are [here](/docs/contributingguidelines.md).
+They are [here](/docs/CONTRIBUTING.md).
 
 ## Third party licenses
 Third party licenses are available [here](/docs/thirdpartylicenses.md).
