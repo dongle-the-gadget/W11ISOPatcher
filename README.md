@@ -42,6 +42,10 @@ You can have the program use a local `appraiserres.dll` file by placing the file
 ## Image
 ![Windows 11 ISO Patcher](https://user-images.githubusercontent.com/29563098/131250432-d3e8fbe2-1653-4cfe-9439-e6804080c70b.png)
 
+## Support guidelines
+
+They are [here](/docs/supportguidelines.md).
+
 ## Contributing guidelines
 They are [here](/docs/contributingguidelines.md).
 
