@@ -31,7 +31,7 @@ namespace W11ISO
             InitializeComponent();
             _frame = frame;
 #if DEBUG
-            Title += " [DEBUG]"
+            Title += " [DEBUG]";
 #endif
             _frame.Navigate(typeof(WelcomePage));
         }
