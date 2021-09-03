@@ -25,5 +25,5 @@ If you have tested your contributions, include the test results in the PR Descri
 
 Build     | Success? | Notes                                                       |
 ----------|----------|-------------------------------------------------------------|
-22000.168 | Yes      | Works correctly in testing of a Secure Boot incompatible PC |
+22000.168 | Yes      | Works correctly in testing on a Secure Boot incompatible PC |
 22000.51  | No       | Failure at step 3                                           |
