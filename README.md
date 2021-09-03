@@ -51,3 +51,6 @@ They are [here](/docs/CONTRIBUTING.md).
 
 ## Third party licenses
 Third party licenses are available [here](/docs/thirdpartylicenses.md).
+
+## Code of Conduct
+This project follows [this Code of Conduct](/CODE_OF_CONDUCT.md).
