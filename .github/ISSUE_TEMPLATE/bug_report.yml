@@ -39,3 +39,4 @@ body:
         - label: I agree that this problem complies with the support guidelines.
           required: true
         - label: I agree that I comply with the code of conduct.
+          required: true
