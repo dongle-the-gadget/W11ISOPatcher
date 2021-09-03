@@ -17,7 +17,7 @@ Requires .NET 6 Preview Windows Desktop SDK and Visual Studio 2019 Preview or Vi
 
 ## Usage
 You will need:
-  - A x64 Windows 11 ISO that you have read access to.
+  - A Windows 11 ISO that you have read access to.
   - An empty folder that you have read and modify access to. (This will serve as our working folder)
 
 First, launch the patcher and choose Next.
