@@ -59,12 +59,6 @@ namespace W11ISO.Pages
                     });
 
                     PowerShellMount.Dismount(MainWindow.location.OrigISO);
-
-                    Dispatcher.Invoke(() =>
-                    {
-                        ExtractCircle.Fill = new SolidColorBrush(Colors.Green);
-                        AppraiserCircle.Fill = new SolidColorBrush(Colors.Blue);
-                    });
                 }
                 catch
                 {
@@ -81,6 +75,8 @@ namespace W11ISO.Pages
                 {
                     Dispatcher.Invoke(() =>
                     {
+                        ExtractCircle.Fill = new SolidColorBrush(Colors.Green);
+                        AppraiserCircle.Fill = new SolidColorBrush(Colors.Blue);
                         ProgressText.Content = "Acquiring appraiserres.dll...";
                     });
 
@@ -152,12 +148,6 @@ namespace W11ISO.Pages
                     if (appraiserresfile != "")
                     {
                         File.Copy(appraiserresfile, System.IO.Path.Combine(MainWindow.location.WorkingDir, "isoroot", "sources", "appraiserres.dll"), true);
-                        Dispatcher.Invoke(() =>
-                        {
-                            AppraiserCircle.Fill = new SolidColorBrush(Colors.Green);
-                            MountCircle.Fill = new SolidColorBrush(Colors.Blue);
-                            ProgressText.Content = "Mounting boot.wim...";
-                        });
                     }
                     else
                     {
@@ -177,14 +167,15 @@ namespace W11ISO.Pages
 
                 try
                 {
-                    Directory.CreateDirectory(System.IO.Path.Combine(MainWindow.location.WorkingDir, "mount"));
-                    DismApi.MountImage(System.IO.Path.Combine(MainWindow.location.WorkingDir, "isoroot", "sources", "boot.wim"), System.IO.Path.Combine(MainWindow.location.WorkingDir, "mount"), 2);
                     Dispatcher.Invoke(() =>
                     {
-                        MountCircle.Fill = new SolidColorBrush(Colors.Green);
-                        RegistryCircle.Fill = new SolidColorBrush(Colors.Blue);
-                        ProgressText.Content = "Applying registry patch...";
+                        AppraiserCircle.Fill = new SolidColorBrush(Colors.Green);
+                        MountCircle.Fill = new SolidColorBrush(Colors.Blue);
+                        ProgressText.Content = "Mounting boot.wim...";
                     });
+                    Directory.CreateDirectory(System.IO.Path.Combine(MainWindow.location.WorkingDir, "mount"));
+                    DismApi.MountImage(System.IO.Path.Combine(MainWindow.location.WorkingDir, "isoroot", "sources", "boot.wim"), System.IO.Path.Combine(MainWindow.location.WorkingDir, "mount"), 2);
+                    
                 }
                 catch
                 {
@@ -199,6 +190,12 @@ namespace W11ISO.Pages
 
                 try
                 {
+                    Dispatcher.Invoke(() =>
+                    {
+                        MountCircle.Fill = new SolidColorBrush(Colors.Green);
+                        RegistryCircle.Fill = new SolidColorBrush(Colors.Blue);
+                        ProgressText.Content = "Applying registry patch...";
+                    });
                     Process process = new();
                     process.StartInfo.FileName = "reg.exe";
                     process.StartInfo.Arguments = $"load HKLM\\bootwimpatch \"{System.IO.Path.Combine(MainWindow.location.WorkingDir, "mount", "Windows", "system32", "config", "SYSTEM")}\"";
@@ -216,12 +213,6 @@ namespace W11ISO.Pages
                     process.StartInfo.CreateNoWindow = true;
                     process.Start();
                     process.WaitForExit();
-                    Dispatcher.Invoke(() =>
-                    {
-                        RegistryCircle.Fill = new SolidColorBrush(Colors.Green);
-                        UnmountCircle.Fill = new SolidColorBrush(Colors.Blue);
-                        ProgressText.Content = "Saving and unmounting boot.wim...";
-                    });
                 }
                 catch
                 {
@@ -236,13 +227,13 @@ namespace W11ISO.Pages
 
                 try
                 {
-                    DismApi.UnmountImage(System.IO.Path.Combine(MainWindow.location.WorkingDir, "mount"), true);
                     Dispatcher.Invoke(() =>
                     {
-                        UnmountCircle.Fill = new SolidColorBrush(Colors.Green);
-                        PackageCircle.Fill = new SolidColorBrush(Colors.Blue);
-                        ProgressText.Content = "Building ISO file...";
+                        RegistryCircle.Fill = new SolidColorBrush(Colors.Green);
+                        UnmountCircle.Fill = new SolidColorBrush(Colors.Blue);
+                        ProgressText.Content = "Saving and unmounting boot.wim...";
                     });
+                    DismApi.UnmountImage(System.IO.Path.Combine(MainWindow.location.WorkingDir, "mount"), true);
                 }
                 catch
                 {
@@ -257,6 +248,12 @@ namespace W11ISO.Pages
 
                 try
                 {
+                    Dispatcher.Invoke(() =>
+                    {
+                        UnmountCircle.Fill = new SolidColorBrush(Colors.Green);
+                        PackageCircle.Fill = new SolidColorBrush(Colors.Blue);
+                        ProgressText.Content = "Building ISO file...";
+                    });
                     CdImageHandler.GenerateISOImage(new FileInfo(MainWindow.location.Product).FullName, System.IO.Path.Combine(MainWindow.location.WorkingDir, "isoroot"), "CCCOMA_X64FRE_EN-US_DV9", (Operation, ProgressPercentage, IsIndeterminate) =>
                     {
                         Dispatcher.Invoke(() =>
@@ -267,13 +264,6 @@ namespace W11ISO.Pages
                                 ProgressBar.Value = ProgressPercentage;
                             }
                         });
-                    });
-
-                    Dispatcher.Invoke(() =>
-                    {
-                        PackageCircle.Fill = new SolidColorBrush(Colors.Green);
-                        CleaningUpCircle.Fill = new SolidColorBrush(Colors.Blue);
-                        ProgressText.Content = "Deleting unused files...";
                     });
                 }
                 catch
@@ -288,6 +278,12 @@ namespace W11ISO.Pages
 
                 try
                 {
+                    Dispatcher.Invoke(() =>
+                    {
+                        PackageCircle.Fill = new SolidColorBrush(Colors.Green);
+                        CleaningUpCircle.Fill = new SolidColorBrush(Colors.Blue);
+                        ProgressText.Content = "Deleting unused files...";
+                    });
                     DirectoryInfo dir = new DirectoryInfo(MainWindow.location.WorkingDir);
                     foreach (var file in dir.GetFiles())
                         file.Delete();
