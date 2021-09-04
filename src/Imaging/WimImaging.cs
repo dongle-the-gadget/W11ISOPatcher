@@ -20,7 +20,6 @@
  * SOFTWARE.
  */
 using ManagedWimLib;
-using Microsoft.Wim;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -206,7 +205,7 @@ namespace Imaging
             {
                 return false;
             }
-            return ReseatWIMXml(wimFile);
+            return ReseatWIMXml2(wimFile);
         }
 
 
@@ -277,11 +276,11 @@ namespace Imaging
             {
                 return false;
             }
-            return ReseatWIMXml(wimFile);
+            return ReseatWIMXml2(wimFile);
         }
 
 
-        public bool ExportImage(string wimFile, string destinationWimFile, int imageIndex, IEnumerable<string> referenceWIMs = null, WimCompressionType compressionType = WimCompressionType.Lzx, ProgressCallback progressCallback = null)
+        public bool ExportImage(string wimFile, string destinationWimFile, int imageIndex, IEnumerable<string> referenceWIMs = null, CompressionType compression = CompressionType.LZX, ProgressCallback progressCallback = null)
         {
             string title = $"Exporting {wimFile.Split(Path.DirectorySeparatorChar).Last()} - Index {imageIndex}";
             try
@@ -312,32 +311,6 @@ namespace Imaging
                 using Wim srcWim = Wim.OpenWim(wimFile, OpenFlags.None);
                 string imageName = srcWim.GetImageName(imageIndex);
                 string imageDescription = srcWim.GetImageDescription(imageIndex);
-
-
-                CompressionType compression = CompressionType.None;
-                switch (compressionType)
-                {
-                    case WimCompressionType.Lzms:
-                        {
-                            compression = CompressionType.LZMS;
-                            break;
-                        }
-                    case WimCompressionType.Lzx:
-                        {
-                            compression = CompressionType.LZX;
-                            break;
-                        }
-                    case WimCompressionType.None:
-                        {
-                            compression = CompressionType.None;
-                            break;
-                        }
-                    case WimCompressionType.Xpress:
-                        {
-                            compression = CompressionType.XPRESS;
-                            break;
-                        }
-                }
 
 
                 if (referenceWIMs?.Any() == true)
@@ -376,7 +349,7 @@ namespace Imaging
             {
                 return false;
             }
-            return ReseatWIMXml(destinationWimFile);
+            return ReseatWIMXml2(destinationWimFile);
         }
 
 
@@ -476,7 +449,7 @@ namespace Imaging
             {
                 return false;
             }
-            return ReseatWIMXml(wimFile);
+            return ReseatWIMXml2(wimFile);
         }
 
 
@@ -556,7 +529,7 @@ namespace Imaging
             string InputDirectory,
             string imageDisplayName = null,
             string imageDisplayDescription = null,
-            WimCompressionType compressionType = WimCompressionType.Lzx,
+            CompressionType compression = CompressionType.LZX,
             ProgressCallback progressCallback = null,
             int UpdateFrom = -1,
             bool PreserveACL = true)
@@ -650,30 +623,6 @@ namespace Imaging
                 }
                 else
                 {
-                    CompressionType compression = CompressionType.None;
-                    switch (compressionType)
-                    {
-                        case WimCompressionType.Lzms:
-                            {
-                                compression = CompressionType.LZMS;
-                                break;
-                            }
-                        case WimCompressionType.Lzx:
-                            {
-                                compression = CompressionType.LZX;
-                                break;
-                            }
-                        case WimCompressionType.None:
-                            {
-                                compression = CompressionType.None;
-                                break;
-                            }
-                        case WimCompressionType.Xpress:
-                            {
-                                compression = CompressionType.XPRESS;
-                                break;
-                            }
-                    }
 
 
                     using Wim wim = Wim.CreateNewWim(compression);
@@ -726,7 +675,7 @@ namespace Imaging
             {
                 return false;
             }
-            return ReseatWIMXml(wimFile);
+            return ReseatWIMXml2(wimFile);
         }
 
 
@@ -769,45 +718,6 @@ namespace Imaging
         }
 
 
-        public static bool GetWIMInformation(
-            string wimFile,
-            out WIMInformationXML.WIM wim)
-        {
-            wim = null;
-            try
-            {
-                using WimHandle wimHandle = WimgApi.CreateFile(
-                    wimFile,
-                    WimFileAccess.Read,
-                    WimCreationDisposition.OpenExisting,
-                    WimCreateFileOptions.Chunked,
-                    WimCompressionType.None);
-                // Always set a temporary path
-                //
-                WimgApi.SetTemporaryPath(wimHandle, Path.GetTempPath());
-
-
-                try
-                {
-                    string wiminfo = WimgApi.GetImageInformationAsString(wimHandle);
-                    wim = WIMInformationXML.DeserializeWIM(wiminfo);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message + " - " + ex.ToString());
-                }
-                finally
-                {
-                }
-            }
-            catch
-            {
-                return GetWIMInformation2(wimFile, out wim);
-            }
-            return true;
-        }
-
-
         public static bool GetWIMInformation2(
             string wimFile,
             out WIMInformationXML.WIM wim)
@@ -827,42 +737,6 @@ namespace Imaging
         }
 
 
-        public static bool GetWIMImageInformation(
-            string wimFile,
-            int imageIndex,
-            out WIMInformationXML.IMAGE image)
-        {
-            image = null;
-            try
-            {
-                using WimHandle wimHandle = WimgApi.CreateFile(
-                    wimFile,
-                    WimFileAccess.Read,
-                    WimCreationDisposition.OpenExisting,
-                    WimCreateFileOptions.Chunked,
-                    WimCompressionType.None);
-                // Always set a temporary path
-                //
-                WimgApi.SetTemporaryPath(wimHandle, Path.GetTempPath());
-
-
-                try
-                {
-                    using WimHandle imageHandle = WimgApi.LoadImage(wimHandle, imageIndex);
-                    string wiminfo = WimgApi.GetImageInformationAsString(imageHandle);
-                    image = WIMInformationXML.DeserializeIMAGE(wiminfo);
-                }
-                finally
-                {
-                }
-            }
-            catch
-            {
-                return GetWIMImageInformation2(wimFile, imageIndex, out image);
-            }
-            return true;
-        }
-
 
         public static bool GetWIMImageInformation2(
             string wimFile,
@@ -880,42 +754,6 @@ namespace Imaging
             catch
             {
                 return false;
-            }
-            return true;
-        }
-
-
-        public static bool SetWIMImageInformation(
-            string wimFile,
-            int imageIndex,
-            WIMInformationXML.IMAGE image)
-        {
-            try
-            {
-                using WimHandle wimHandle = WimgApi.CreateFile(
-                    wimFile,
-                    WimFileAccess.Write,
-                    WimCreationDisposition.OpenExisting,
-                    WimCreateFileOptions.Chunked,
-                    WimCompressionType.None);
-                // Always set a temporary path
-                //
-                WimgApi.SetTemporaryPath(wimHandle, Path.GetTempPath());
-
-
-                try
-                {
-                    using WimHandle imageHandle = WimgApi.LoadImage(wimHandle, imageIndex);
-                    string img = WIMInformationXML.SerializeIMAGE(image);
-                    WimgApi.SetImageInformation(imageHandle, img);
-                }
-                finally
-                {
-                }
-            }
-            catch
-            {
-                return SetWIMImageInformation2(wimFile, imageIndex, image);
             }
             return true;
         }
@@ -940,34 +778,6 @@ namespace Imaging
             catch
             {
                 return false;
-            }
-            return true;
-        }
-
-
-        private static bool ReseatWIMXml(string wimFile)
-        {
-            try
-            {
-                using WimHandle wimHandle = WimgApi.CreateFile(
-                    wimFile,
-                    WimFileAccess.Write,
-                    WimCreationDisposition.OpenExisting,
-                    WimCreateFileOptions.Chunked,
-                    WimCompressionType.None);
-                // Always set a temporary path
-                //
-                WimgApi.SetTemporaryPath(wimHandle, Path.GetTempPath());
-
-
-                string xmldata = WimgApi.GetImageInformationAsString(wimHandle);
-                WIMInformationXML.WIM xml = WIMInformationXML.DeserializeWIM(xmldata);
-                xmldata = WIMInformationXML.SerializeWIM(xml);
-                WimgApi.SetImageInformation(wimHandle, xmldata);
-            }
-            catch
-            {
-                return ReseatWIMXml2(wimFile);
             }
             return true;
         }

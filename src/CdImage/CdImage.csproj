@@ -6,14 +6,4 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="cdimage.exe" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="cdimage.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
 </Project>

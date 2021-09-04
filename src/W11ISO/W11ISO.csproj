@@ -1,43 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows10.0.18362.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
-	<PropertyGroup>
-		<Version>2.0.1.0</Version>
-		<Authors>Dongle</Authors>
-		<Product>W11ISOPatcher</Product>
-		<PackageId>W11ISOPatcher</PackageId>
-		<AssemblyVersion>2.0.1.0</AssemblyVersion>
-		<FileVersion>2.0.1.0</FileVersion>
-		<NeutralLanguage>en</NeutralLanguage>
-		<Description>Windows 11 ISO Patcher</Description>
-		<Copyright>MIT License</Copyright>
-		<PackageLicenseUrl>https://github.com/dongle-the-gadget/W11ISOPatcher/blob/main/LICENSE</PackageLicenseUrl>
-		<PackageProjectUrl>https://github.com/dongle-the-gadget/W11ISOPatcher/</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/dongle-the-gadget/W11ISOPatcher/</RepositoryUrl>
-		<Title>Windows 11 ISO Patcher</Title>
-		<ApplicationIcon>icon.ico</ApplicationIcon>
-	</PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="ModernWpfUI" Version="0.9.4" />
-    <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Cabinet.NET\Cabinet.NET.csproj" />
     <ProjectReference Include="..\CdImage\CdImage.csproj" />
-    <ProjectReference Include="..\CompDB.NET\CompDB.NET.csproj" />
     <ProjectReference Include="..\DownloadLib.NET\DownloadLib.NET.csproj" />
     <ProjectReference Include="..\Imaging\Imaging.csproj" />
-    <ProjectReference Include="..\Microsoft.Dism\Microsoft.Dism.csproj" />
-    <ProjectReference Include="..\WindowsUpdateLib.NET\WindowsUpdateLib.NET.csproj" />
   </ItemGroup>
 
 </Project>
