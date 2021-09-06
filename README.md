@@ -4,7 +4,7 @@ Windows 11 ISO patcher.
 ![.NET Workflow](https://github.com/dongle-the-gadget/W11ISOPatcher/actions/workflows/dotnet.yml/badge.svg)
 
 ## Important notice about Version 1 Preview
-The `appraiserres.dll` file hosted on this GitHub will be brought down on **September 5th, 2021** (GMT+0). On that date and beyond, you will have to use a local `appraiserres.dll` file or the program will cease to work.
+The `appraiserres-x64.dll` file hosted on this GitHub is now down. W11ISOPatcher version 1 will now require [a local `appraiserres.dll` file](#using-a-local-appraiserresdll-file).
 
 ## Requirements
 ### Running
@@ -17,7 +17,7 @@ Requires .NET 6 Preview Windows Desktop SDK and Visual Studio 2019 Preview or Vi
 
 ## Usage
 You will need:
-  - A x64 Windows 11 ISO that you have read access to.
+  - A Windows 11 ISO that you have read access to.
   - An empty folder that you have read and modify access to. (This will serve as our working folder)
 
 First, launch the patcher and choose Next.
@@ -44,7 +44,10 @@ You can have the program use a local `appraiserres.dll` file by placing the file
 They are [here](/docs/supportguidelines.md).
 
 ## Contributing guidelines
-They are [here](/docs/contributingguidelines.md).
+They are [here](/docs/CONTRIBUTING.md).
 
 ## Third party licenses
 Third party licenses are available [here](/docs/thirdpartylicenses.md).
+
+## Code of Conduct
+This project follows [this Code of Conduct](/CODE_OF_CONDUCT.md).

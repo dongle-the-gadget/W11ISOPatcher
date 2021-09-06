@@ -33,8 +33,10 @@ body:
   - type: checkboxes
     id: terms
     attributes:
-      label: Support guidelines
-      description: By submitting this issue, you agree that this problem complies with the [support guidelines](https://github.com/dongle-the-gadget/W11ISOPatcher/blob/main/docs/supportguidelines.md)
+      label: Support guidelines and Code of Conduct
+      description: By submitting this issue, you agree that you comply with the [support guidelines](https://github.com/dongle-the-gadget/W11ISOPatcher/blob/main/docs/supportguidelines.md) and the [code of conduct](https://github.com/dongle-the-gadget/W11ISOPatcher/blob/main/CODE_OF_CONDUCT.md)
       options:
         - label: I agree that this problem complies with the support guidelines.
+          required: true
+        - label: I agree that I comply with the code of conduct.
           required: true

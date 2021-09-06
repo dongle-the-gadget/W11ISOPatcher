@@ -18,3 +18,12 @@ These are the contributing guidelines for Windows 11 ISO patcher. Failure to com
 - Checking for check failures
 
   If any checks failed, check their logs to see what changes you made that caused it to fail.
+  
+- Testing
+
+If you have tested your contributions, include the test results in the PR Description. A testing note may look like this:
+
+Build     | Success? | Notes                                                       |
+----------|----------|-------------------------------------------------------------|
+22000.168 | Yes      | Works correctly in testing on a Secure Boot incompatible PC |
+22000.51  | No       | Failure at step 3                                           |
