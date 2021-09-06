@@ -93,18 +93,19 @@ namespace W11ISO.Pages
                     else
                     {
                         // Try to download the appraiserres.dll file.
-                        // TODO: Determine if the user is supplying a x64 or an ARM64 ISO.
-                        CTAC ctac = new(OSSkuId.Professional, "10.0.19041.200", MachineType.amd64, "Retail", "", "CB", "vb_release", "Production", false);
+                        WIMImaging.GetWIMImageInformation2(System.IO.Path.Combine(MainWindow.location.WorkingDir, "isoroot", "sources", "boot.wim"), 2, out WIMInformationXML.IMAGE imageInfo);
+                        MachineType type = imageInfo.WINDOWS.ARCH.Contains("9", StringComparison.InvariantCultureIgnoreCase) ? MachineType.amd64 : MachineType.arm64;
+                        CTAC ctac = new(OSSkuId.Professional, "10.0.19041.200", type, "Retail", "", "CB", "vb_release", "Production", false);
                         Dispatcher.Invoke(() =>
                         {
-                            ProgressText.Content = "Listing Microsoft's UUP update list...";
+                            ProgressText.Content = "Listing Microsoft's UUP updates...";
                         });
                         UpdateData update = (await FE3Handler.GetUpdates(null, ctac, "", FileExchangeV3UpdateFilter.ProductRelease)).ElementAt(0);
                         Dispatcher.Invoke(() =>
                         {
                             ProgressText.Content = "Downloading core.esd...";
                         });
-                        string folder = await UpdateUtils.ProcessUpdateAsync(update, System.IO.Path.Combine(MainWindow.location.WorkingDir, "appraiserres"), MachineType.amd64, this, "core_en-us.esd", "en-us");
+                        string folder = await UpdateUtils.ProcessUpdateAsync(update, System.IO.Path.Combine(MainWindow.location.WorkingDir, "appraiserres"), type, this, "core_en-us.esd", "en-us");
 
                         string esdFile = System.IO.Path.Combine(folder, "MetadataESD", "core_en-us.esd");
 

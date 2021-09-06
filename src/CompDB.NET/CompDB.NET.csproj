@@ -5,6 +5,9 @@
     <Platforms>AnyCPU;x64;x86;arm64</Platforms>
     <OutputPath>$(SolutionDir)build\$(Platform)\$(Configuration)\CompDB.NET\</OutputPath>
     <IntermediateOutputPath>$(SolutionDir)intermediate\$(Platform)\$(Configuration)\CompDB.NET\</IntermediateOutputPath>
+	  <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	  <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+
   </PropertyGroup>
 
   <Import Project="..\CompDB.Shared\CompDB.Shared.projitems" Label="Shared" />

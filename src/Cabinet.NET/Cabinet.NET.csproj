@@ -8,6 +8,8 @@
     <OutputPath>$(SolutionDir)build\$(Platform)\$(Configuration)\Cabinet.NET\</OutputPath>
     <IntermediateOutputPath>$(SolutionDir)intermediate\$(Platform)\$(Configuration)\Cabinet.NET\</IntermediateOutputPath>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+	  <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+
   </PropertyGroup>
 
   <Import Project="..\Cabinet.Shared\Cabinet.Shared.projitems" Label="Shared" />
