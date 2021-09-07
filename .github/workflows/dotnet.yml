@@ -13,8 +13,8 @@ on:
       - '**TEMPLATE**'
 
 jobs:
-  amd64build:
-    name: 'Build (x64)'
+  build:
+    name: 'Build'
     runs-on: windows-2022
     steps:
     - uses: actions/checkout@v2
@@ -30,22 +30,4 @@ jobs:
     - name: Build
       run: |
         cd src
-        dotnet build --no-restore -r win-x64
-  arm64build:
-    name: 'Build (ARM64)'
-    runs-on: windows-2022
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 6.0.x
-        include-prerelease: true
-    - name: Restore dependencies
-      run: |
-        cd src
-        dotnet restore
-    - name: Build
-      run: |
-        cd src
-        dotnet build --no-restore -r win-arm64
+        dotnet build --no-restore
