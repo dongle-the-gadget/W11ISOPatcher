@@ -5,13 +5,16 @@ on:
     branches: [ main ]
     paths-ignore:
       - '**/**.md'
+      - '**TEMPLATE**'
   pull_request:
     branches: [ main ]
     paths-ignore:
       - '**/**.md'
+      - '**TEMPLATE**'
 
 jobs:
-  Build (x64):
+  amd64build:
+    name: 'Build (x64)'
     runs-on: windows-2022
     steps:
     - uses: actions/checkout@v2
@@ -28,7 +31,8 @@ jobs:
       run: |
         cd src
         dotnet build --no-restore -r win-x64
-  Build (ARM64):
+  arm64build:
+    name: 'Build (ARM64)'
     runs-on: windows-2022
     steps:
     - uses: actions/checkout@v2
