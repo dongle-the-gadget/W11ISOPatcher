@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+	  <RuntimeIdentifiers>win10-x64;win10-arm64</RuntimeIdentifiers>
   </PropertyGroup>
 
 	<PropertyGroup>
