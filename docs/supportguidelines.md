@@ -2,9 +2,9 @@
 Here are the support guidelines of W11ISOPatcher. All issues submitted must comply to these guidelines, otherwise the issue will be immediately closed.
 
 ## Operating system
-This project only officially supports **Windows 10 May 2020 Update (version 2004, build 19041) or newer**. Older versions and other OSes are either:
-  - Ended support (ex: Windows 7 or older versions of Windows 10).
-  - Not tested (ex: Windows 8.1).
+This project only officially supports **Windows 10 May 2020 Update (version 2004, build 19041) or newer**. Older versions and other OSes either:
+  - Have ended support (ex: Windows 7 or older versions of Windows 10).
+  - Is not tested (ex: Windows 8.1).
   - Cannot run the program under normal means (ex: macOS or Linux).
 
 ## Program versions
