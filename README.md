@@ -46,8 +46,8 @@ They are [here](/docs/supportguidelines.md).
 ## Contributing guidelines
 They are [here](/docs/CONTRIBUTING.md).
 
-## Third party licenses
-Third party licenses are available [here](/docs/thirdpartylicenses.md).
+## License
+This project is licensed under [MIT License](/LICENSE). Third party licenses are available [here](/docs/thirdpartylicenses.md).
 
 ## Code of Conduct
 This project follows [this Code of Conduct](/CODE_OF_CONDUCT.md).
