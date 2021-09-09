@@ -1,5 +1,5 @@
 # Third party licenses
-The program uses source code from these open-source projects:
+The program uses source code/binaries from these open-source projects:
 
 Project name      | Owner         | Portions used                               | License
 ------------------|---------------|---------------------------------------------|--------------------------------------------------------------------------------
